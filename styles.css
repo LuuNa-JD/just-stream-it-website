@@ -1,0 +1,329 @@
+body {
+  font-family: "Oswald", sans-serif;
+}
+
+h2 {
+  font-size: 3rem;
+  padding: 2dvw 0;
+  margin: 0;
+  font-weight: 600;
+}
+
+.banner {
+  background-color: #61787F;
+  color: #ffffff;
+  padding: 2dvw 0;
+  padding-left: 2dvw;
+  margin: 0dvh 7dvw 0;
+  display: flex;
+  text-align: center;
+  border-radius: 5px;
+  border: 1px solid #000000;
+  flex-wrap: wrap;
+}
+.banner .logo img {
+  width: 11dvw;
+  height: 9dvw;
+}
+.banner .text {
+  font-size: 4dvw;
+  font-weight: 300;
+  margin-left: 4dvw;
+  align-self: center;
+}
+
+.content-container-bestmovie {
+  margin: 0dvh 7dvw 0;
+}
+
+.card-best-movie {
+  border: 5px solid #000000;
+  border-radius: 5px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+}
+.card-best-movie .card-img-container {
+  width: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1dvw;
+}
+.card-best-movie .card-img-top,
+.card-best-movie .modal-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+.card-best-movie .card-body {
+  padding: 0.5dvw 1dvw;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex: 65%;
+}
+.card-best-movie .card-title {
+  font-size: 4dvw;
+  margin-bottom: 0.5dvh;
+  margin-top: 0;
+}
+.card-best-movie .card-text {
+  font-size: 2.5dvw;
+  margin-right: 0.5dvw;
+  margin-top: 0;
+  font-weight: 300;
+}
+.card-best-movie .btn {
+  display: inline-block;
+  padding: 2dvw 4dvw;
+  margin: 4dvh 2dvw;
+  font-size: 2dvw;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 20px;
+  color: #fff;
+  background-color: #FA0B0B;
+  border: none;
+  cursor: pointer;
+  align-self: flex-end;
+}
+.card-best-movie .btn:hover {
+  background-color: #ce0404;
+}
+
+.movies-container {
+  margin: 0dvh 7dvw 0;
+}
+.movies-container .section-header {
+  margin-bottom: 1rem;
+}
+.movies-container .movie-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+}
+.movies-container .movie-img {
+  width: 100%;
+  height: 432px;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 10px;
+}
+.movies-container .movie-card-body {
+  position: absolute;
+  top: 4dvh;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 1dvh;
+  display: flex;
+  flex-direction: column;
+  height: 30%;
+}
+.movies-container .movie-card-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 0.1dvh;
+  align-self: flex-start;
+  position: relative;
+  top: -5dvh;
+}
+.movies-container .movie-btn {
+  padding: 0.5dvw 1dvw;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  position: absolute;
+  bottom: 2dvh;
+  right: 2dvh;
+  font-weight: bold;
+}
+.movies-container .movie-btn:hover {
+  background-color: #b32e2e;
+}
+.movies-container .view-more-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.movies-container .view-more {
+  display: inline-block;
+  padding: 2dvw 4dvw;
+  margin: 4dvh 2dvw;
+  font-size: 2dvw;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 20px;
+  color: #fff;
+  background-color: #FA0B0B;
+  border: none;
+  cursor: pointer;
+  align-self: flex-end;
+}
+.movies-container .view-more:hover {
+  background-color: #ce0404;
+}
+
+.movies-grid {
+  display: grid;
+  grid-gap: 4dvh;
+}
+
+@media (min-width: 1024px) {
+  .movies-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (min-width: 576px) and (max-width: 1024px) {
+  .movies-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 576px) {
+  .movies-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.hidden-movies {
+  display: none;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.modal-dialog {
+  position: relative;
+  margin: auto;
+  padding: 20px;
+  max-width: 800px;
+  background-color: #fff;
+  border-radius: 10px;
+}
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+}
+.modal-body {
+  padding-top: 15px;
+}
+.modal-title {
+  font-size: 1.5rem;
+  margin: 0;
+}
+.modal.show {
+  display: block;
+}
+.modal .close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.modal .close:hover {
+  color: #ce0404;
+}
+
+@media (max-width: 1024px) {
+  .banner .text {
+    font-size: 4dvw;
+  }
+  .banner .logo img {
+    width: 13.2dvw;
+    height: 10.8dvw;
+  }
+  h2 {
+    font-size: 2rem;
+  }
+  .card-best-movie .card-img-container {
+    width: 30%;
+  }
+  .card-best-movie .card-body {
+    flex: 60%;
+    padding: 1dvw 1dvw;
+  }
+  .card-best-movie .btn {
+    margin-top: auto;
+    align-self: flex-start;
+  }
+}
+@media (max-width: 576px) {
+  .banner {
+    padding-left: 0dvw;
+    flex-direction: column;
+  }
+  .banner .logo {
+    align-self: center;
+  }
+  .banner .logo img {
+    width: 22dvw;
+    height: 18dvw;
+    margin: 0 auto;
+  }
+  .banner .text {
+    display: none;
+  }
+  h2 {
+    font-size: 2rem;
+    text-align: center;
+  }
+  .card-best-movie {
+    flex-direction: column;
+  }
+  .card-best-movie .card-img-container {
+    width: 100%;
+    height: 250px;
+    display: flex;
+    object-fit: center;
+    object-position: center;
+  }
+  .card-best-movie .card-img-top,
+  .card-best-movie .modal-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    padding-left: 1dvw;
+    padding-right: 3dvw;
+    padding-top: 1dvh;
+  }
+  .card-best-movie .card-body {
+    flex: 100%;
+    padding: 1dvw;
+  }
+  .card-best-movie .card-title {
+    font-size: 2rem;
+    margin-left: 1dvh;
+  }
+  .card-best-movie .card-text {
+    font-size: 1rem;
+    margin-left: 1dvh;
+  }
+  .card-best-movie .btn {
+    align-self: center;
+    margin: 1dvh 0;
+    padding: 3dvw 5dvw;
+    font-size: 3dvw;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */

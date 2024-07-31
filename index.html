@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JustStreamIt</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+    </style>
+</head>
+
+<body>
+    <div class="banner">
+      <div class="logo">
+        <img src="images/logo.png" alt="JustStreamIt">
+      </div>
+      <div class="text">
+        Vidéos à la demande
+      </div>
+    </div>
+    <div class="content-container-bestmovie">
+      <!-- Meilleur Film -->
+      <h2>Meilleur Film</h2>
+      <div id="best-movie" class="card-best-movie">
+        <div class="card-img-container">
+          <img src="#" class="card-img-top movie-img" alt="Meilleur film">
+        </div>
+        <div class="card-body">
+          <h5 class="card-title" id="best-movie-title">Titre du Film</h5>
+          <p class="card-text" id="best-movie-summary">Résumé</p>
+          <button class="btn" id="best-movie-details">Détails</button>
+        </div>
+      </div>
+    </div>
+
+        <!-- Films les Mieux Notés -->
+        <div class="movies-container">
+            <div class="section-header">
+                <h2>Films les mieux notés</h2>
+            </div>
+            <div id="top-rated-movies" class="movies-grid">
+            </div>
+            <div class="view-more-container">
+              <button id="view-more" class="btn view-more">Voir plus</button>
+            </div>
+        </div>
+
+        <!-- Films par Catégorie -->
+        <div class="movies-container">
+          <div class="section-header">
+            <h2>Horreur</h2>
+          </div>
+          <div id="movies-category1" class="movies-grid">
+          </div>
+          <div class="view-more-container">
+            <button id="view-more-category1" class="btn view-more">Voir plus</button>
+          </div>
+        </div>
+
+        <div class="movies-container">
+          <div class="section-header">
+            <h2>Comédie</h2>
+          </div>
+          <div id="movies-category2" class="movies-grid">
+          </div>
+          <div class="view-more-container">
+            <button id="view-more-category2" class="btn view-more">Voir plus</button>
+          </div>
+        </div>
+
+        <div class="movies-container">
+          <div class="section-header">
+            <h2>Catégorie libre</h2>
+          </div>
+          <ul id="category-list"></ul>
+          <div id="movies-selected-category" class="movies-grid"></div>
+          <!-- <div class="view-more-container">
+            <!-- <button id="view-more-selected-category" class="btn view-more">Voir plus</button> -->
+          <!-- </div> -->
+        </div>
+
+    <!-- Modal -->
+    <div class="modal" id="movieModal" tabindex="-1" aria-labelledby="movieModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="movieModalLabel">Titre du Film</h5>
+                    <button type="button" class="close" aria-label="Close">
+                        &times;
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <img src="#" class="modal-img mb-3" alt="Image du Film" id="modal-movie-img">
+                    <p><strong>Genre :</strong> <span id="modal-movie-genre"></span></p>
+                    <p><strong>Date de sortie :</strong> <span id="modal-movie-release-date"></span></p>
+                    <p><strong>Classification :</strong> <span id="modal-movie-rating"></span></p>
+                    <p><strong>Score IMDB :</strong> <span id="modal-movie-imdb-score"></span></p>
+                    <p><strong>Réalisateur :</strong> <span id="modal-movie-director"></span></p>
+                    <p><strong>Acteurs :</strong> <span id="modal-movie-actors"></span></p>
+                    <p><strong>Durée :</strong> <span id="modal-movie-duration"></span></p>
+                    <p><strong>Pays d'origine :</strong> <span id="modal-movie-country"></span></p>
+                    <p><strong>Recettes au box-office :</strong> <span id="modal-movie-box-office"></span></p>
+                    <p><strong>Résumé :</strong> <span id="modal-movie-summary"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+
+</html>

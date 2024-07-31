@@ -1,0 +1,354 @@
+$font-family-base: "Oswald", sans-serif;
+$btn-color: #FA0B0B;
+$banner-bg-color: #61787F;
+$banner-text-color: #ffffff;
+$default-padding: 2dvw 0;
+$default-margin: 0dvh 7dvw 0;
+$logo-width: 11dvw;
+$logo-height: 9dvw;
+
+@mixin btn-styles {
+  display: inline-block;
+  padding: 2dvw 4dvw;
+  margin: 4dvh 2dvw;
+  font-size: 2dvw;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 20px;
+  color: #fff;
+  background-color: $btn-color;
+  border: none;
+  cursor: pointer;
+  align-self: flex-end;
+
+  &:hover {
+    background-color: darken($btn-color, 10%);
+  }
+}
+
+
+body {
+  font-family: $font-family-base;
+}
+
+h2 {
+  font-size: 3rem;
+  padding: $default-padding;
+  margin: 0;
+  font-weight: 600;
+}
+
+.banner {
+  background-color: $banner-bg-color;
+  color: $banner-text-color;
+  padding: $default-padding;
+  padding-left: 2dvw;
+  margin: $default-margin;
+  display: flex;
+  text-align: center;
+  border-radius: 5px;
+  border: 1px solid #000000;
+  flex-wrap: wrap;
+
+  .logo {
+    img {
+      width: $logo-width;
+      height: $logo-height;
+    }
+  }
+  .text {
+    font-size: 4dvw;
+    font-weight: 300;
+    margin-left: 4dvw;
+    align-self: center;
+  }
+}
+
+.content-container-bestmovie {
+  margin: $default-margin;
+}
+
+.card-best-movie {
+  border: 5px solid #000000;
+  border-radius: 5px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+
+  .card-img-container {
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1dvw;
+  }
+
+  .card-img-top,
+  .modal-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .card-body {
+    padding: 0.5dvw 1dvw;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex: 65%;
+  }
+
+  .card-title {
+    font-size: 4dvw;
+    margin-bottom: 0.5dvh;
+    margin-top: 0;
+  }
+
+  .card-text {
+    font-size: 2.5dvw;
+    margin-right: 0.5dvw;
+    margin-top: 0;
+    font-weight: 300;
+  }
+  .btn {
+    @include btn-styles;
+  }
+}
+
+.movies-container {
+  margin: $default-margin;
+  .section-header {
+    margin-bottom: 1rem;
+  }
+  .movie-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+  }
+  .movie-img {
+    width: 100%;
+    height: 432px;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 10px;
+  }
+  .movie-card-body {
+    position: absolute;
+    top: 4dvh;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 1dvh;
+    display: flex;
+    flex-direction: column;
+    height: 30%;
+  }
+  .movie-card-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 0.1dvh;
+    align-self: flex-start;
+    position: relative;
+    top: -5dvh;
+  }
+  .movie-btn {
+    padding: 0.5dvw 1dvw;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    position: absolute;
+    bottom: 2dvh;
+    right: 2dvh;
+    font-weight: bold;
+    }
+  .movie-btn:hover {
+    background-color: #b32e2e;
+  }
+  .view-more-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .view-more {
+    @include btn-styles;
+  }
+}
+
+.movies-grid {
+  display: grid;
+  grid-gap: 4dvh;
+
+}
+@media (min-width: 1024px) {
+  .movies-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (min-width: 576px) and (max-width: 1024px) {
+  .movies-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 576px) {
+  .movies-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.hidden-movies {
+  display: none;
+}
+
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  &-dialog {
+    position: relative;
+    margin: auto;
+    padding: 20px;
+    max-width: 800px;
+    background-color: #fff;
+    border-radius: 10px;
+  }
+
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  &-body {
+    padding-top: 15px;
+  }
+
+  &-title {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+
+  &.show {
+    display: block;
+  }
+
+  .close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+
+    &:hover {
+      color: darken($btn-color, 10%);
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .banner {
+    .text {
+      font-size: 4dvw;
+    }
+    .logo {
+      img {
+      width: calc($logo-width * 1.2);
+      height: calc($logo-height * 1.2);
+      }
+    }
+  }
+  h2 {
+    font-size: 2rem;
+  }
+  .card-best-movie {
+    .card-img-container {
+      width: 30%;
+    }
+    .card-body {
+      flex: 60%;
+      padding: 1dvw 1dvw;
+    }
+    .btn {
+      margin-top: auto;
+      align-self: flex-start;
+    }
+  }
+}
+
+
+@media (max-width: 576px) {
+  .banner {
+    padding-left: 0dvw;
+    flex-direction: column;
+    .logo {
+      align-self: center;
+      img {
+        width: calc($logo-width * 2);
+        height: calc($logo-height * 2);
+        margin: 0 auto;
+      }
+    }
+    .text {
+      display: none;
+    }
+  }
+  h2 {
+    font-size: 2rem;
+    text-align: center;
+  }
+  .card-best-movie {
+    flex-direction: column;
+    .card-img-container {
+      width: 100%;
+      height: 250px;
+      display: flex;
+      object-fit: center;
+      object-position: center;
+    }
+    .card-img-top,
+    .modal-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      padding-left: 1dvw;
+      padding-right: 3dvw;
+      padding-top: 1dvh;
+    }
+    .card-body {
+      flex: 100%;
+      padding: 1dvw;
+    }
+    .card-title {
+      font-size: 2rem;
+      margin-left: 1dvh;
+    }
+    .card-text {
+      font-size: 1rem;
+      margin-left: 1dvh;
+
+    }
+    .btn {
+
+      align-self: center;
+      margin: 1dvh 0;
+      padding: 3dvw 5dvw;
+      font-size: 3dvw;
+    }
+  }
+}
