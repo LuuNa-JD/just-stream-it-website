@@ -197,6 +197,10 @@ h2 {
   display: none;
 }
 
+#view-more-selected-category {
+  display: none;
+}
+
 .modal {
   display: none;
   position: fixed;

@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
         displayBestMovie(movie);
       })
       .catch(error => {
-        console.error('Error fetching the best movie:', error);
+        console.error('Erreur lors de la récupération du meilleur film :', error);
       });
   }
 
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
     fetch(url)
       .then(response => response.json())
       .then(data => {
-        const moviesToAdd = skipFirst ? data.results.slice(1) : data.results; // Saute le premier film pour éviter les doublons
+        const moviesToAdd = skipFirst ? data.results.slice(1) : data.results; // Ignorer le premier film pour éviter les doublons
         accumulatedMovies = accumulatedMovies.concat(moviesToAdd);
 
         if (accumulatedMovies.length < 10 && data.next) {
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       })
       .catch(error => {
-        console.error('Error fetching top-rated movies:', error); // Affiche une erreur si la requête échoue
+        console.error('Erreur lors de la récupération des films les mieux notés :', error); // Afficher une erreur si la requête échoue
       });
   }
 
@@ -93,12 +93,12 @@ document.addEventListener('DOMContentLoaded', function () {
           isShowingMoreCategory[category] = false;
           const moviesContainer = document.getElementById(`movies-${category}`);
           const initialCount = getInitialMoviesCount();
-          displayMovies(categoryMovies[category], moviesContainer, initialCount);
+          displayMovies(categoryMovies[category], moviesContainer, initialCount, category);
           setupViewMoreButtonForCategory(category);
         }
       })
       .catch(error => {
-        console.error(`Error fetching ${category} movies:`, error);
+        console.error(`Erreur lors de la récupération des films de la catégorie ${category} :`, error);
       });
   }
 
@@ -126,7 +126,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // fonction pour afficher les films
   function displayMovies(movies, container, limit, category = null) {
-    container.innerHTML = ''; // Efface le contenu du conteneur
+    if (!container) {
+      console.error(`Élément du conteneur avec l'ID ${container} introuvable.`);
+      return;
+    }
+
+    container.innerHTML = ''; // Effacer le contenu du conteneur
     const moviesToDisplay = movies.slice(0, limit);
     moviesToDisplay.forEach(movie => {
       const movieCard = createMovieCard(movie);
@@ -134,9 +139,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     if (category) {
-        categoryDisplayedCount[category] = limit;
+      categoryDisplayedCount[category] = limit;
     } else {
-        currentDisplayedCount = limit;
+      currentDisplayedCount = limit;
     }
   }
 
@@ -152,6 +157,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     img.onerror = async function () {
       this.src = await getRandomImage();
+      this.onerror = null; // Éviter une boucle infinie
     };
 
     const cardBody = document.createElement('div');
@@ -190,8 +196,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const imgElement = document.getElementById('modal-movie-img');
     imgElement.src = movie.image_url;
     imgElement.onerror = async function () {
-    this.src = await getRandomImage();
-    this.onerror = null;
+      this.src = await getRandomImage();
+      this.onerror = null;
     };
     document.getElementById('movieModalLabel').textContent = movie.title;
     document.getElementById('modal-movie-genre').textContent = movie.genres.join(', ');
@@ -205,10 +211,10 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('modal-movie-box-office').textContent = movie.box_office;
     document.getElementById('modal-movie-summary').textContent = movie.description;
 
-    document.querySelector('.modal').style.display = 'block'; //affiche la modale
+    document.querySelector('.modal').style.display = 'block'; // Afficher la fenêtre modale
   }
 
-  // paramétrer le bouton "Voir plus" pour les films les mieux notés
+  // Configurer le bouton "Voir plus" pour les films les mieux notés
   function setupViewMoreButton() {
     const viewMoreButton = document.getElementById('view-more');
     const moviesContainer = document.getElementById('top-rated-movies');
@@ -223,13 +229,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
       viewMoreButton.onclick = function () {
         if (isShowingMore) {
-          // afficher moins
+          // Afficher moins
           displayMovies(totalMovies, moviesContainer, initialCount);
           currentDisplayedCount = initialCount;
           isShowingMore = false;
           this.textContent = 'Voir plus';
         } else {
-          // afficher plus
+          // Afficher plus
           const newLimit = Math.min(currentDisplayedCount + viewMoreCount, totalMovies.length);
           displayMovies(totalMovies, moviesContainer, newLimit);
           currentDisplayedCount = newLimit;
@@ -252,19 +258,19 @@ document.addEventListener('DOMContentLoaded', function () {
     const viewMoreCount = getViewMoreCount();
 
     if (viewMoreCount === 0) {
-      viewMoreButton.style.display = 'none'; // cache le bouton sur desktop
+      viewMoreButton.style.display = 'none'; // Masquer le bouton sur ordinateur
     } else {
-      viewMoreButton.style.display = 'block'; // montre le bouton sur tablette et mobile
+      viewMoreButton.style.display = 'block'; // Afficher le bouton sur tablette et mobile
       viewMoreButton.textContent = isShowingMoreCategory[category] ? 'Voir moins' : 'Voir plus';
 
       viewMoreButton.onclick = function () {
         if (isShowingMoreCategory[category]) {
-          // Show less
+          // Afficher moins
           displayMovies(categoryMovies[category], moviesContainer, initialCount, category);
           isShowingMoreCategory[category] = false;
           this.textContent = 'Voir plus';
         } else {
-          // Show more
+          // Afficher plus
           const newLimit = Math.min(categoryDisplayedCount[category] + viewMoreCount, categoryMovies[category].length);
           displayMovies(categoryMovies[category], moviesContainer, newLimit, category);
           isShowingMoreCategory[category] = true;
@@ -278,28 +284,26 @@ document.addEventListener('DOMContentLoaded', function () {
     categoryDisplayedCount[category] = initialCount;
   }
 
-  // fonction pour peupler la liste des catégories
-  function populateCategoryList() {
-    const categories = ['action', 'comedy', 'drama', 'horror'];
-    const categoryList = document.getElementById('category-list');
+  // Ajouter un écouteur d'événements pour le menu déroulant des catégories
+  document.getElementById('category-selector').addEventListener('change', function (event) {
+    const selectedCategory = event.target.value;
+    const viewMoreButton = document.getElementById('view-more-selected-category');
 
-    categories.forEach(category => {
-      const categoryItem = document.createElement('li');
-      categoryItem.textContent = category;
-      categoryItem.onclick = function () {
-        fetchMoviesForSelectedCategory(category);
-      };
-      categoryList.appendChild(categoryItem);
-    });
-  }
+    if (selectedCategory) {
+      fetchMoviesForSelectedCategory(selectedCategory);
+    } else {
+      // Ne pas afficher le bouton "Voir plus" si aucune catégorie n'est sélectionnée
+      viewMoreButton.style.display = 'none';
+    }
+  });
 
-  // fonction pour récupérer les films pour la catégorie sélectionnée
+  // Fonction pour récupérer et afficher les films pour la catégorie sélectionnée
   function fetchMoviesForSelectedCategory(category) {
     const url = `http://localhost:8000/api/v1/titles/?genre=${category}&sort_by=-imdb_score&sort_by=-votes&limit=10`;
-    fetchMoviesByCategory(url, `selected-category-${category}`);
+    fetchMoviesByCategory(url, 'selected-category');
   }
 
-  // ferme la modale lorsqu'on clique en dehors de celle-ci
+  // Fermer la fenêtre modale en cliquant à l'extérieur
   window.onclick = function (event) {
     const modal = document.querySelector('.modal');
     if (event.target == modal) {
@@ -307,39 +311,36 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   };
 
-  // ferme la modale lorsqu'on clique sur le bouton de fermeture
+  // Fermer la fenêtre modale en cliquant sur le bouton de fermeture
   document.querySelector('.close').onclick = function () {
     document.querySelector('.modal').style.display = 'none';
   };
 
-  // recuperation des données
+  // Récupérer les données initiales
   fetchBestMovie();
   fetchTopRatedMovies(topMoviesLink);
 
-  // recuperation des films par catégorie
+  // Récupérer les films par catégorie
   fetchMoviesByCategory(category1Link, 'category1');
   fetchMoviesByCategory(category2Link, 'category2');
 
-  // peuple la liste des catégories
-  populateCategoryList();
-
-  // Re-fetch les films quand la fenêtre est redimensionnée
+  // Récupérer à nouveau les films lors du redimensionnement de la fenêtre
   window.addEventListener('resize', function () {
     const moviesContainer = document.getElementById('top-rated-movies');
-    moviesContainer.innerHTML = ''; // Clear the container
-    currentDisplayedCount = 0; // Reset the count of displayed movies
+    moviesContainer.innerHTML = ''; // Effacer le conteneur
+    currentDisplayedCount = 0; // Réinitialiser le nombre de films affichés
     const initialCount = getInitialMoviesCount();
     displayMovies(totalMovies, moviesContainer, initialCount);
-    isShowingMore = false; // Reset the view more state
+    isShowingMore = false; // Réinitialiser l'état de "Voir plus"
     setupViewMoreButton();
 
-    // Re-fetch les films par catégorie
+    // Récupérer à nouveau les films par catégorie
     Object.keys(categoryMovies).forEach(category => {
       const categoryContainer = document.getElementById(`movies-${category}`);
-      categoryContainer.innerHTML = ''; // Clear the container
-      categoryDisplayedCount[category] = 0; // Reset the count of displayed movies for the category
-      displayMovies(categoryMovies[category], categoryContainer, initialCount);
-      isShowingMoreCategory[category] = false; // Reset the view more state
+      categoryContainer.innerHTML = ''; // Effacer le conteneur
+      categoryDisplayedCount[category] = 0; // Réinitialiser le nombre de films affichés pour la catégorie
+      displayMovies(categoryMovies[category], categoryContainer, initialCount, category);
+      isShowingMoreCategory[category] = false; // Réinitialiser l'état de "Voir plus"
       setupViewMoreButtonForCategory(category);
     });
   });

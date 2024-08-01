@@ -72,14 +72,20 @@
 
         <div class="movies-container">
           <div class="section-header">
-            <h2>Catégorie libre</h2>
+              <h2>Catégorie libre</h2>
           </div>
-          <ul id="category-list"></ul>
+          <select id="category-selector">
+              <option value="">-- Choisissez une catégorie --</option>
+              <option value="action">Action</option>
+              <option value="Sport">Sport</option>
+              <option value="Drama">Drame</option>
+              <option value="War">Guerre</option>
+              <option value="Sci-Fi">Science-fiction</option>
+          </select>
           <div id="movies-selected-category" class="movies-grid"></div>
-          <!-- <div class="view-more-container">
-            <!-- <button id="view-more-selected-category" class="btn view-more">Voir plus</button> -->
-          <!-- </div> -->
-        </div>
+          <div class="view-more-container">
+              <button id="view-more-selected-category" class="btn view-more">Voir plus</button>
+          </div>
 
     <!-- Modal -->
     <div class="modal" id="movieModal" tabindex="-1" aria-labelledby="movieModalLabel" aria-hidden="true">
