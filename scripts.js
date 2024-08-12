@@ -1,17 +1,16 @@
 document.addEventListener('DOMContentLoaded', function () {
-  const bestMovieLink = 'http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&sort_by=-votes&limit=1'
-  const topMoviesLink = 'http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&sort_by=-votes&limit=10'
-  const category1Link = 'http://localhost:8000/api/v1/titles/?genre=horror&sort_by=-imdb_score&sort_by=-votes&limit=10'
-  const category2Link = 'http://localhost:8000/api/v1/titles/?genre=comedy&sort_by=-imdb_score&sort_by=-votes&limit=10'
-  const otherCategoryLink = "http://localhost:8000/api/v1/titles/?genre=${category}&sort_by=-imdb_score&sort_by=-votes&limit=10"
+  const bestMovieLink = 'http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&sort_by=-votes&limit=1';
+  const topMoviesLink = 'http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&sort_by=-votes&limit=10';
+  const category1Link = 'http://localhost:8000/api/v1/titles/?genre=horror&sort_by=-imdb_score&sort_by=-votes&limit=10';
+  const category2Link = 'http://localhost:8000/api/v1/titles/?genre=comedy&sort_by=-imdb_score&sort_by=-votes&limit=10';
 
-  let totalMovies = []; // definie la liste des films
-  let currentDisplayedCount = 0; // traque le nombre de films affichés
-  let isShowingMore = false; // traque si "Voir plus" est actif
+  let totalMovies = []; // Définit la liste des films
+  let currentDisplayedCount = 0; // Traque le nombre de films affichés
+  let isShowingMore = false; // Traque si "Voir plus" est actif
 
-  let categoryMovies = {}; // stock les films par catégorie
-  let categoryDisplayedCount = {}; // traque le nombre de films affichés par catégorie
-  let isShowingMoreCategory = {}; // traque si "Voir plus" est actif par catégorie
+  let categoryMovies = {}; // Stocke les films par catégorie
+  let categoryDisplayedCount = {}; // Traque le nombre de films affichés par catégorie
+  let isShowingMoreCategory = {}; // Traque si "Voir plus" est actif par catégorie
 
 
   async function getRandomImage() {
@@ -19,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
     return response.url;
   }
 
-  // fonction pour récupérer le meilleur film
+  // Fonction pour récupérer le meilleur film
   function fetchBestMovie() {
     fetch(bestMovieLink)
       .then(response => response.json())
@@ -36,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
       });
   }
 
-  // fonction pour afficher le meilleur film
+  // Fonction pour afficher le meilleur film
   function displayBestMovie(movie) {
     const imgElement = document.querySelector('#best-movie img');
     const imageUrl = movie.image_url;
@@ -53,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
     };
   }
 
-  // fonction pour récupérer les films les mieux notés
+  // Fonction pour récupérer les films les mieux notés
   function fetchTopRatedMovies(url, accumulatedMovies = [], skipFirst = true) {
     fetch(url)
       .then(response => response.json())
@@ -65,7 +64,6 @@ document.addEventListener('DOMContentLoaded', function () {
           fetchTopRatedMovies(data.next, accumulatedMovies, false);
         } else {
           totalMovies = accumulatedMovies;
-          currentDisplayedCount = 0; // Réinitialiser le nombre de films affichés
           const moviesContainer = document.getElementById('top-rated-movies');
           const initialCount = getInitialMoviesCount();
           displayMovies(totalMovies, moviesContainer, initialCount);
@@ -77,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
       });
   }
 
-  // fonction pour récupérer les films par catégorie
+  // Fonction pour récupérer les films par catégorie
   function fetchMoviesByCategory(url, category, accumulatedMovies = []) {
     fetch(url)
       .then(response => response.json())
@@ -89,8 +87,6 @@ document.addEventListener('DOMContentLoaded', function () {
           fetchMoviesByCategory(data.next, category, accumulatedMovies);
         } else {
           categoryMovies[category] = accumulatedMovies;
-          categoryDisplayedCount[category] = 0;
-          isShowingMoreCategory[category] = false;
           const moviesContainer = document.getElementById(`movies-${category}`);
           const initialCount = getInitialMoviesCount();
           displayMovies(categoryMovies[category], moviesContainer, initialCount, category);
@@ -102,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
       });
   }
 
-  // fonction pour obtenir le nombre de films à afficher en fonction de la largeur de l'écran
+  // Fonction pour obtenir le nombre de films à afficher en fonction de la largeur de l'écran
   function getInitialMoviesCount() {
     if (window.innerWidth >= 1025) {
       return 6;
@@ -113,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  // fonction pour obtenir le nombre de films à afficher lors de l'appui sur "Voir plus"
+  // Fonction pour obtenir le nombre de films à afficher lors de l'appui sur "Voir plus"
   function getViewMoreCount() {
     if (window.innerWidth >= 1025) {
       return 0;
@@ -124,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  // fonction pour afficher les films
+  // Fonction pour afficher les films
   function displayMovies(movies, container, limit, category = null) {
     if (!container) {
       console.error(`Élément du conteneur avec l'ID ${container} introuvable.`);
@@ -145,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  // fonction pour créer une carte de film
+  // Fonction pour créer une carte de film
   function createMovieCard(movie) {
     const cardDiv = document.createElement('div');
     cardDiv.className = 'movie-card';
@@ -182,7 +178,7 @@ document.addEventListener('DOMContentLoaded', function () {
     return cardDiv;
   }
 
-  // fonction pour récupérer les détails du film
+  // Fonction pour récupérer les détails du film
   function fetchMovieDetails(movieId) {
     fetch(`http://localhost:8000/api/v1/titles/${movieId}`)
       .then(response => response.json())
@@ -222,9 +218,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const viewMoreCount = getViewMoreCount();
 
     if (viewMoreCount === 0) {
-      viewMoreButton.style.display = 'none'; // cache le bouton sur desktop
+      viewMoreButton.style.display = 'none'; // Cache le bouton sur desktop
     } else {
-      viewMoreButton.style.display = 'block'; // affiche le bouton sur tablette et mobile
+      viewMoreButton.style.display = 'block'; // Affiche le bouton sur tablette et mobile
       viewMoreButton.textContent = isShowingMore ? 'Voir moins' : 'Voir plus';
 
       viewMoreButton.onclick = function () {
@@ -250,7 +246,7 @@ document.addEventListener('DOMContentLoaded', function () {
     currentDisplayedCount = initialCount;
   }
 
-  // paramétrer le bouton "Voir plus" pour les films par catégorie
+  // Paramétrer le bouton "Voir plus" pour les films par catégorie
   function setupViewMoreButtonForCategory(category) {
     const viewMoreButton = document.getElementById(`view-more-${category}`);
     const moviesContainer = document.getElementById(`movies-${category}`);
@@ -273,13 +269,14 @@ document.addEventListener('DOMContentLoaded', function () {
           // Afficher plus
           const newLimit = Math.min(categoryDisplayedCount[category] + viewMoreCount, categoryMovies[category].length);
           displayMovies(categoryMovies[category], moviesContainer, newLimit, category);
+          categoryDisplayedCount[category] = newLimit;
           isShowingMoreCategory[category] = true;
           this.textContent = 'Voir moins';
         }
       };
     }
 
-    // affichage initial
+    // Affichage initial
     displayMovies(categoryMovies[category], moviesContainer, initialCount, category);
     categoryDisplayedCount[category] = initialCount;
   }
@@ -299,7 +296,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Fonction pour récupérer et afficher les films pour la catégorie sélectionnée
   function fetchMoviesForSelectedCategory(category) {
-    const url = otherCategoryLink.replace('${category}', category);
+    const url = `http://localhost:8000/api/v1/titles/?genre=${category}&sort_by=-imdb_score&sort_by=-votes&limit=10`;
     fetchMoviesByCategory(url, 'selected-category');
   }
 
@@ -328,7 +325,6 @@ document.addEventListener('DOMContentLoaded', function () {
   window.addEventListener('resize', function () {
     const moviesContainer = document.getElementById('top-rated-movies');
     moviesContainer.innerHTML = ''; // Effacer le conteneur
-    currentDisplayedCount = 0; // Réinitialiser le nombre de films affichés
     const initialCount = getInitialMoviesCount();
     displayMovies(totalMovies, moviesContainer, initialCount);
     isShowingMore = false; // Réinitialiser l'état de "Voir plus"
@@ -338,7 +334,6 @@ document.addEventListener('DOMContentLoaded', function () {
     Object.keys(categoryMovies).forEach(category => {
       const categoryContainer = document.getElementById(`movies-${category}`);
       categoryContainer.innerHTML = ''; // Effacer le conteneur
-      categoryDisplayedCount[category] = 0; // Réinitialiser le nombre de films affichés pour la catégorie
       displayMovies(categoryMovies[category], categoryContainer, initialCount, category);
       isShowingMoreCategory[category] = false; // Réinitialiser l'état de "Voir plus"
       setupViewMoreButtonForCategory(category);
