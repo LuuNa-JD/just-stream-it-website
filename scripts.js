@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
   async function getRandomImage() {
-    const response = await fetch('https://picsum.photos/200/300');
+    const response = await fetch('https://loremflickr.com/320/240');
     return response.url;
   }
 
@@ -187,28 +187,40 @@ document.addEventListener('DOMContentLoaded', function () {
       });
   }
 
+  function closeModal() {
+    document.getElementById('movieModal').style.display = 'none';
+  }
+
   // Affiche les détails du film dans une modale
-  function showMovieDetails(movie) {
+  async function showMovieDetails(movie) {
     const imgElement = document.getElementById('modal-movie-img');
     imgElement.src = movie.image_url;
     imgElement.onerror = async function () {
-      this.src = await getRandomImage();
-      this.onerror = null;
+        this.src = await getRandomImage();
+        this.onerror = null;
     };
-    document.getElementById('movieModalLabel').textContent = movie.title;
-    document.getElementById('modal-movie-genre').textContent = movie.genres.join(', ');
-    document.getElementById('modal-movie-release-date').textContent = movie.date_published;
-    document.getElementById('modal-movie-rating').textContent = movie.rated;
-    document.getElementById('modal-movie-imdb-score').textContent = movie.imdb_score;
+
+    document.getElementById('modal-movie-title').textContent = movie.title;
+
+    // Combine year and genres
+    document.getElementById('modal-movie-year-genre').textContent = `${movie.year} - ${movie.genres.join(', ')}`;
+
+    // Combine rating and duration
+    document.getElementById('modal-movie-rating-duration').textContent = `PG-${movie.rated} - ${movie.duration} minutes (${movie.countries})`;
+
+    document.getElementById('modal-movie-imdb-score').textContent = `IMDB score: ${movie.imdb_score}/10`;
+
     document.getElementById('modal-movie-director').textContent = movie.directors.join(', ');
-    document.getElementById('modal-movie-actors').textContent = movie.actors.join(', ');
-    document.getElementById('modal-movie-duration').textContent = movie.duration;
-    document.getElementById('modal-movie-country').textContent = movie.countries.join(', ');
-    document.getElementById('modal-movie-box-office').textContent = movie.box_office;
+
     document.getElementById('modal-movie-summary').textContent = movie.description;
 
-    document.querySelector('.modal').style.display = 'block'; // Afficher la fenêtre modale
+    document.getElementById('modal-movie-actors').textContent = movie.actors.join(', ');
+
+    document.querySelector('.modal').style.display = 'block'; // Show the modal
+
+    document.querySelector('.btn.btn-danger[aria-label="Close"]').onclick = closeModal;
   }
+
 
   // Configurer le bouton "Voir plus" pour les films les mieux notés
   function setupViewMoreButton() {
@@ -282,17 +294,49 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // Ajouter un écouteur d'événements pour le menu déroulant des catégories
-  document.getElementById('category-selector').addEventListener('change', function (event) {
-    const selectedCategory = event.target.value;
+  document.getElementById('category-selector').addEventListener('focus', function (event) {
+    const categorySelector = event.target;
+    const selectedCategoryIndex = categorySelector.selectedIndex;
+
+    // Ajouter une coche verte à l'option sélectionnée quand le menu déroulant est ouvert
+    if (!categorySelector.options[selectedCategoryIndex].dataset.originalText) {
+        categorySelector.options[selectedCategoryIndex].dataset.originalText = categorySelector.options[selectedCategoryIndex].text;
+    }
+    categorySelector.options[selectedCategoryIndex].text += ' ✅';
+});
+
+document.getElementById('category-selector').addEventListener('blur', function (event) {
+    const categorySelector = event.target;
+
+    // Restaurer le texte original de l'option sélectionnée après la fermeture du menu
+    setTimeout(() => {
+        for (let i = 0; i < categorySelector.options.length; i++) {
+            if (categorySelector.options[i].dataset.originalText) {
+                categorySelector.options[i].text = categorySelector.options[i].dataset.originalText;
+            }
+        }
+    }, 100);
+});
+
+document.getElementById('category-selector').addEventListener('change', function (event) {
+    const categorySelector = event.target;
+    const selectedCategoryIndex = categorySelector.selectedIndex;
     const viewMoreButton = document.getElementById('view-more-selected-category');
 
-    if (selectedCategory) {
-      fetchMoviesForSelectedCategory(selectedCategory);
+    // Mettre à jour le texte original sans la coche
+    categorySelector.options[selectedCategoryIndex].dataset.originalText = categorySelector.options[selectedCategoryIndex].text.replace(' ✅', '');
+
+    // Traiter le changement de sélection
+    if (categorySelector.value) {
+        fetchMoviesForSelectedCategory(categorySelector.value);
+        viewMoreButton.style.display = 'block'; // Affiche le bouton "Voir plus"
     } else {
-      // Ne pas afficher le bouton "Voir plus" si aucune catégorie n'est sélectionnée
-      viewMoreButton.style.display = 'none';
+        viewMoreButton.style.display = 'none'; // Masquer le bouton "Voir plus"
     }
-  });
+
+    // Fermer le menu déroulant en retirant le focus
+    categorySelector.blur();
+});
 
   // Fonction pour récupérer et afficher les films pour la catégorie sélectionnée
   function fetchMoviesForSelectedCategory(category) {
@@ -300,18 +344,18 @@ document.addEventListener('DOMContentLoaded', function () {
     fetchMoviesByCategory(url, 'selected-category');
   }
 
-  // Fermer la fenêtre modale en cliquant à l'extérieur
-  window.onclick = function (event) {
-    const modal = document.querySelector('.modal');
-    if (event.target == modal) {
-      modal.style.display = 'none';
-    }
-  };
+  // // Fermer la fenêtre modale en cliquant à l'extérieur
+  // window.onclick = function (event) {
+  //   const modal = document.querySelector('.modal');
+  //   if (event.target == modal) {
+  //     modal.style.display = 'none';
+  //   }
+  // };
 
-  // Fermer la fenêtre modale en cliquant sur le bouton de fermeture
-  document.querySelector('.close').onclick = function () {
-    document.querySelector('.modal').style.display = 'none';
-  };
+  // // Fermer la fenêtre modale en cliquant sur le bouton de fermeture
+  // document.querySelector('.close').onclick = function () {
+  //   document.querySelector('.modal').style.display = 'none';
+  // };
 
   // Récupérer les données initiales
   fetchBestMovie();

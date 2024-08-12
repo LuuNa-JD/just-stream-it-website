@@ -72,47 +72,54 @@
 
         <div class="movies-container">
           <div class="section-header">
-              <h2>Catégorie libre</h2>
+            <h2>Catégorie libre</h2>
           </div>
-          <select id="category-selector">
-              <option value="">-- Choisissez une catégorie --</option>
+          <div id="category-selector-container" style="position: relative;">
+            <select id="category-selector">
               <option value="action">Action</option>
               <option value="Sport">Sport</option>
               <option value="Drama">Drame</option>
               <option value="War">Guerre</option>
               <option value="Sci-Fi">Science-fiction</option>
-          </select>
+            </select>
+            <span class="validation-check" style="display: none; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: green; font-size: 16px;">✔️</span>
+          </div>
           <div id="movies-selected-category" class="movies-grid"></div>
           <div class="view-more-container">
-              <button id="view-more-selected-category" class="btn view-more">Voir plus</button>
+            <button id="view-more-selected-category" class="btn view-more">Voir plus</button>
           </div>
+        </div>
 
     <!-- Modal -->
     <div class="modal" id="movieModal" tabindex="-1" aria-labelledby="movieModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="movieModalLabel">Titre du Film</h5>
-                    <button type="button" class="close" aria-label="Close">
-                        &times;
-                    </button>
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <div class="modal-header-left">
+                      <h5 class="modal-title" id="modal-movie-title"></h5>
+                      <p id="modal-movie-year-genre"></p>
+                      <p id="modal-movie-rating-duration"></p>
+                      <p id="modal-movie-imdb-score"></p>
+                  </div>
+                  <img src="#" class="modal-img mb-3" alt="Image du Film" id="modal-movie-img">
+              </div>
+              <div class="modal-body">
+                <div class="modal-body-director">
+                  <p><strong>Réalisé par:</strong></p>
+                  <span id="modal-movie-director"></span>
                 </div>
-                <div class="modal-body">
-                    <img src="#" class="modal-img mb-3" alt="Image du Film" id="modal-movie-img">
-                    <p><strong>Genre :</strong> <span id="modal-movie-genre"></span></p>
-                    <p><strong>Date de sortie :</strong> <span id="modal-movie-release-date"></span></p>
-                    <p><strong>Classification :</strong> <span id="modal-movie-rating"></span></p>
-                    <p><strong>Score IMDB :</strong> <span id="modal-movie-imdb-score"></span></p>
-                    <p><strong>Réalisateur :</strong> <span id="modal-movie-director"></span></p>
-                    <p><strong>Acteurs :</strong> <span id="modal-movie-actors"></span></p>
-                    <p><strong>Durée :</strong> <span id="modal-movie-duration"></span></p>
-                    <p><strong>Pays d'origine :</strong> <span id="modal-movie-country"></span></p>
-                    <p><strong>Recettes au box-office :</strong> <span id="modal-movie-box-office"></span></p>
-                    <p><strong>Résumé :</strong> <span id="modal-movie-summary"></span></p>
+                <div class="modal-body-actors">
+                  <p id="modal-movie-summary"></p>
+                  <p><strong>Avec:</strong></p>
+                  <span id="modal-movie-actors"></span>
                 </div>
-            </div>
-        </div>
-    </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" aria-label="Close" onclick="closeModal()">Fermer</button>
+              </div>
+          </div>
+      </div>
+  </div>
 
     <script src="scripts.js"></script>
 </body>

@@ -8,9 +8,8 @@ $logo-width: 11dvw;
 $logo-height: 9dvw;
 
 @mixin btn-styles {
-  display: inline-block;
-  padding: 2dvw 4dvw;
-  margin: 4dvh 2dvw;
+  padding: 1dvw 3dvw;
+  margin: 1dvh 2dvw;
   font-size: 2dvw;
   font-weight: bold;
   text-align: center;
@@ -70,6 +69,7 @@ h2 {
 }
 
 .card-best-movie {
+  position: relative;
   border: 5px solid #000000;
   border-radius: 5px;
   overflow: hidden;
@@ -114,6 +114,7 @@ h2 {
   }
   .btn {
     @include btn-styles;
+    margin-top: auto;
   }
 }
 
@@ -202,6 +203,55 @@ h2 {
   }
 }
 
+#category-selector-container {
+  width: 300px;
+  margin: 20px auto;
+  position: relative;
+  display: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: #000;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+#category-selector {
+  width: 100%;
+  padding: 10px;
+  border: 4px solid #000;
+  font-size: 16px;
+  font-weight: bold;
+  color: #000;
+  background-color: #fff;
+  cursor: pointer;
+  appearance: none;
+}
+
+
+#category-selector option {
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #000;
+  background-color: #fff;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+
+#category-selector-container:after {
+  content: "▼";
+  position: absolute;
+  top: 50%;
+  right: 30px;
+  transform: translateY(-50%);
+  font-size: 18px;
+  pointer-events: none;
+}
+
+
 .hidden-movies {
   display: none;
 }
@@ -212,53 +262,97 @@ h2 {
 .modal {
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 1000;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
 
   &-dialog {
     position: relative;
     margin: auto;
     padding: 20px;
-    max-width: 800px;
+    top: 20%;
+    max-width: 400px;
+    overflow: auto;
     background-color: #fff;
     border-radius: 10px;
+    border: 3px solid #010101;
   }
 
   &-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #ddd;
-  }
+    align-items: flex-start;
+    padding-bottom: 10px;
 
-  &-body {
-    padding-top: 15px;
+    &-left {
+      display: flex;
+      flex-direction: column;
+    }
   }
 
   &-title {
-    font-size: 1.5rem;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 1.2;
+    color: #000;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  #modal-movie-year-genre,
+  #modal-movie-rating-duration,
+  #modal-movie-imdb-score {
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px;
+    color: #000000;
     margin: 0;
+    font-weight: 600;
+  }
+
+  .modal-img {
+    width: 150px;
+    height: auto;
+    border-radius: 5px;
+  }
+
+  .modal-body {
+    padding-top: 15px;
+  }
+
+  .modal-body p {
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+
+  .modal-footer {
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+  }
+
+  .btn-danger {
+    background-color: #dc3545;
+    border: none;
+    padding: 10px 20px;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .btn-danger:hover {
+    background-color: #c82333;
   }
 
   &.show {
     display: block;
-  }
-
-  .close {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-
-    &:hover {
-      color: darken($btn-color, 10%);
-    }
   }
 }
 
