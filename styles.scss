@@ -47,6 +47,7 @@ h2 {
   display: flex;
   text-align: center;
   border-radius: 5px;
+  margin-top: 6dvh;
   border: 1px solid #000000;
   flex-wrap: wrap;
 
@@ -276,6 +277,7 @@ h2 {
     padding: 20px;
     top: 20%;
     max-width: 400px;
+    transform: scale(1.4);
     overflow: auto;
     background-color: #fff;
     border-radius: 10px;
@@ -325,10 +327,21 @@ h2 {
   }
 
   .modal-body p {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Oswald', sans-serif;
     font-size: 16px;
-    color: #333;
+    color: #000000;
     margin-bottom: 10px;
+  }
+
+  .modal-body-director {
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+    color: #000000;
+    margin-top: 20px;
+  }
+
+  .btn-close {
+    display: none;
   }
 
   .modal-footer {
@@ -338,17 +351,17 @@ h2 {
   }
 
   .btn-danger {
-    background-color: #dc3545;
+    background-color: #d34957;
     border: none;
-    padding: 10px 20px;
+    padding: 10px 25px;
     color: #fff;
     font-size: 16px;
-    border-radius: 5px;
+    border-radius: 15px;
     cursor: pointer;
   }
 
   .btn-danger:hover {
-    background-color: #c82333;
+    background-color: #ff001a;
   }
 
   &.show {
@@ -383,6 +396,59 @@ h2 {
       margin-top: auto;
       align-self: flex-start;
     }
+  }
+  .modal {
+    .modal-dialog {
+      transform: scale(1);
+    }
+    .modal-header {
+      flex-direction: column;
+      align-items: flex-start;
+      position: relative;
+    }
+
+    .modal-img {
+      order: 3;
+      width: 100%;
+      height: auto;
+      margin-top: 15px;
+      border-radius: 5px;
+    }
+
+    .modal-body {
+      width: 100%;
+    }
+
+    .modal-body p {
+      font-size: 14px;
+    }
+
+    #modal-movie-summary {
+      order: 4;
+    }
+
+    .modal-body-actors {
+      order: 2;
+      margin-top: 10px;
+    }
+
+    .btn-close {
+      display: block;
+      background: none;
+      border: none;
+      font-size: 35px;
+      font-weight: bold;
+      color: #ff0000;
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      cursor: pointer;
+    }
+
+    .modal-footer {
+    display: none;
+    }
+
   }
 }
 

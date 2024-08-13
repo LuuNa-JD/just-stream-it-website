@@ -100,17 +100,18 @@
                       <p id="modal-movie-year-genre"></p>
                       <p id="modal-movie-rating-duration"></p>
                       <p id="modal-movie-imdb-score"></p>
+                      <p class="modal-body-director">
+                        <strong>Réalisé par:</strong><br>
+                        <span id="modal-movie-director"></span>
+                      </p>
                   </div>
                   <img src="#" class="modal-img mb-3" alt="Image du Film" id="modal-movie-img">
+                  <button type="button" class="btn-close" aria-label="Close" onclick="closeModal()">&times;</button>
               </div>
-              <div class="modal-body">
-                <div class="modal-body-director">
-                  <p><strong>Réalisé par:</strong></p>
-                  <span id="modal-movie-director"></span>
-                </div>
+              <div class="modal-body"></div>
+              <p id="modal-movie-summary"></p>
                 <div class="modal-body-actors">
-                  <p id="modal-movie-summary"></p>
-                  <p><strong>Avec:</strong></p>
+                  <strong>Avec:</strong><br>
                   <span id="modal-movie-actors"></span>
                 </div>
               </div>

@@ -188,12 +188,17 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function closeModal() {
-    document.getElementById('movieModal').style.display = 'none';
+    const modal = document.getElementById('movieModal');
+
+    modal.setAttribute('aria-hidden', 'true');
+    modal.style.display = 'none';
   }
 
   // Affiche les détails du film dans une modale
   async function showMovieDetails(movie) {
+    const modal = document.getElementById('movieModal');
     const imgElement = document.getElementById('modal-movie-img');
+
     imgElement.src = movie.image_url;
     imgElement.onerror = async function () {
         this.src = await getRandomImage();
@@ -202,10 +207,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.getElementById('modal-movie-title').textContent = movie.title;
 
-    // Combine year and genres
     document.getElementById('modal-movie-year-genre').textContent = `${movie.year} - ${movie.genres.join(', ')}`;
 
-    // Combine rating and duration
     document.getElementById('modal-movie-rating-duration').textContent = `PG-${movie.rated} - ${movie.duration} minutes (${movie.countries})`;
 
     document.getElementById('modal-movie-imdb-score').textContent = `IMDB score: ${movie.imdb_score}/10`;
@@ -216,9 +219,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.getElementById('modal-movie-actors').textContent = movie.actors.join(', ');
 
-    document.querySelector('.modal').style.display = 'block'; // Show the modal
+    document.querySelector('.modal').style.display = 'block';
 
-    document.querySelector('.btn.btn-danger[aria-label="Close"]').onclick = closeModal;
+    modal.style.display = 'block';
+    modal.removeAttribute('aria-hidden');
+
+    modal.setAttribute('tabindex', '-1');
+    modal.focus();
+
+    const closeButton = document.querySelector('.btn.btn-danger[aria-label="Close"]');
+    if (closeButton) {
+        closeButton.onclick = closeModal;
+    }
+
+    const closeCross = document.querySelector('.btn-close[aria-label="Close"]');
+    if (closeCross) {
+        closeCross.onclick = closeModal;
+    }
   }
 
 
@@ -343,19 +360,6 @@ document.getElementById('category-selector').addEventListener('change', function
     const url = `http://localhost:8000/api/v1/titles/?genre=${category}&sort_by=-imdb_score&sort_by=-votes&limit=10`;
     fetchMoviesByCategory(url, 'selected-category');
   }
-
-  // // Fermer la fenêtre modale en cliquant à l'extérieur
-  // window.onclick = function (event) {
-  //   const modal = document.querySelector('.modal');
-  //   if (event.target == modal) {
-  //     modal.style.display = 'none';
-  //   }
-  // };
-
-  // // Fermer la fenêtre modale en cliquant sur le bouton de fermeture
-  // document.querySelector('.close').onclick = function () {
-  //   document.querySelector('.modal').style.display = 'none';
-  // };
 
   // Récupérer les données initiales
   fetchBestMovie();
