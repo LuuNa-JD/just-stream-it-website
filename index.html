@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +9,6 @@
       @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
     </style>
 </head>
-
 <body>
     <div class="banner">
       <div class="logo">
@@ -20,8 +18,8 @@
         Vidéos à la demande
       </div>
     </div>
+
     <div class="content-container-bestmovie">
-      <!-- Meilleur Film -->
       <h2>Meilleur Film</h2>
       <div id="best-movie" class="card-best-movie">
         <div class="card-img-container">
@@ -35,62 +33,61 @@
       </div>
     </div>
 
-        <!-- Films les Mieux Notés -->
-        <div class="movies-container">
-            <div class="section-header">
-                <h2>Films les mieux notés</h2>
-            </div>
-            <div id="top-rated-movies" class="movies-grid">
-            </div>
-            <div class="view-more-container">
-              <button id="view-more" class="btn view-more">Voir plus</button>
-            </div>
+    <!-- Films les Mieux Notés -->
+    <div class="movies-container">
+        <div class="section-header">
+            <h2>Films les mieux notés</h2>
         </div>
-
-        <!-- Films par Catégorie -->
-        <div class="movies-container">
-          <div class="section-header">
-            <h2>Horreur</h2>
-          </div>
-          <div id="movies-category1" class="movies-grid">
-          </div>
-          <div class="view-more-container">
-            <button id="view-more-category1" class="btn view-more">Voir plus</button>
-          </div>
+        <div id="top-rated-movies" class="movies-grid">
         </div>
-
-        <div class="movies-container">
-          <div class="section-header">
-            <h2>Comédie</h2>
-          </div>
-          <div id="movies-category2" class="movies-grid">
-          </div>
-          <div class="view-more-container">
-            <button id="view-more-category2" class="btn view-more">Voir plus</button>
-          </div>
+        <div class="view-more-container">
+          <button id="view-more" class="btn view-more">Voir plus</button>
         </div>
+    </div>
 
-        <div class="movies-container">
-          <div class="section-header">
-            <h2>Catégorie libre</h2>
-          </div>
-          <div id="category-selector-container" style="position: relative;">
-            <select id="category-selector">
-              <option value="action">Action</option>
-              <option value="Sport">Sport</option>
-              <option value="Drama">Drame</option>
-              <option value="War">Guerre</option>
-              <option value="Sci-Fi">Science-fiction</option>
-            </select>
-            <span class="validation-check" style="display: none; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: green; font-size: 16px;">✔️</span>
-          </div>
-          <div id="movies-selected-category" class="movies-grid"></div>
-          <div class="view-more-container">
-            <button id="view-more-selected-category" class="btn view-more">Voir plus</button>
-          </div>
-        </div>
+    <!-- Films par Catégorie -->
+    <div class="movies-container">
+      <div class="section-header">
+        <h2>Horreur</h2>
+      </div>
+      <div id="movies-category1" class="movies-grid">
+      </div>
+      <div class="view-more-container">
+        <button id="view-more-category1" class="btn view-more">Voir plus</button>
+      </div>
+    </div>
 
-    <!-- Modal -->
+    <div class="movies-container">
+      <div class="section-header">
+        <h2>Comédie</h2>
+      </div>
+      <div id="movies-category2" class="movies-grid">
+      </div>
+      <div class="view-more-container">
+        <button id="view-more-category2" class="btn view-more">Voir plus</button>
+      </div>
+    </div>
+
+    <div class="movies-container">
+      <div class="section-header">
+        <h2>Catégorie libre</h2>
+      </div>
+      <div id="category-selector-container" style="position: relative;">
+        <select id="category-selector">
+          <option value="action">Action</option>
+          <option value="Sport">Sport</option>
+          <option value="Drama">Drame</option>
+          <option value="War">Guerre</option>
+          <option value="Sci-Fi">Science-fiction</option>
+        </select>
+        <span id="validation-check" style="display: none; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: green; font-size: 16px;">✅</span>
+      </div>
+      <div id="movies-selected-category" class="movies-grid"></div>
+      <div class="view-more-container">
+        <button id="view-more-selected-category" class="btn view-more">Voir plus</button>
+      </div>
+    </div>
+
     <div class="modal" id="movieModal" tabindex="-1" aria-labelledby="movieModalLabel" aria-hidden="true">
       <div class="modal-dialog">
           <div class="modal-content">
@@ -121,9 +118,7 @@
           </div>
       </div>
   </div>
-</div>
 
     <script src="scripts.js"></script>
 </body>
-
 </html>
