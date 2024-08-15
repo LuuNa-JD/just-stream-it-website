@@ -157,14 +157,28 @@ document.addEventListener('DOMContentLoaded', function () {
   const categorySelector = document.getElementById('category-selector');
   const viewMoreButton = document.getElementById('view-more-selected-category');
 
+  // Masquer le bouton "Voir plus" par défaut sur mobile/tablette
+  viewMoreButton.style.display = 'none';
 
   categorySelector.addEventListener('change', function (event) {
     const selectedCategory = categorySelector.value;
 
+    // Supprimer l'emoji de toutes les options
+    const options = categorySelector.options;
+    for (let i = 0; i < options.length; i++) {
+      options[i].textContent = options[i].textContent.replace(' ✅', '');
+    }
+
+    // Ajouter l'emoji à l'option sélectionnée
+    const selectedOption = categorySelector.selectedOptions[0];
+    selectedOption.textContent += ' ✅';
+
     if (selectedCategory) {
       fetchMoviesForSelectedCategory(selectedCategory);
-      // Afficher le bouton "Voir plus" lorsque la catégorie est sélectionnée
-      viewMoreButton.style.display = 'block';
+      // Afficher le bouton "Voir plus" uniquement si une catégorie est sélectionnée (mobile/tablette)
+      if (window.innerWidth < 1024) {
+        viewMoreButton.style.display = 'block';
+      }
     } else {
       // Masquer le bouton "Voir plus" si aucune catégorie n'est sélectionnée
       viewMoreButton.style.display = 'none';

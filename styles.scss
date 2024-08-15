@@ -202,6 +202,9 @@ h2 {
   .view-more {
     display: none;
   }
+  #view-more-selected-category {
+    display: none !important;
+  }
 }
 
 @media (min-width: 576px) and (max-width: 1023px) {
